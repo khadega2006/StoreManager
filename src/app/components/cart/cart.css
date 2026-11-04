@@ -1,0 +1,158 @@
+.container {
+  max-width: 850px;
+  margin-bottom: 60px;
+}
+
+h2 {
+  text-align: center;
+  color: #A96F78;
+  font-weight: 700;
+  margin-bottom: 35px;
+}
+
+.empty-cart {
+  text-align: center;
+  color: #5C514D;
+}
+
+.empty-cart a {
+  color: #B8838B;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.empty-cart a:hover {
+  color: #7F4F58;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: #FAF7F4;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 5px 20px rgba(92, 81, 77, 0.10);
+}
+
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+}
+
+.cart-info {
+  flex: 1;
+}
+
+.cart-info h5 {
+  color: #A96F78;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.cart-info p {
+  color: #5C514D;
+  margin: 0;
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background-color: #B8838B;
+  color: white;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.qty button:hover {
+  background-color: #7F4F58;
+}
+
+.qty span {
+  min-width: 20px;
+  text-align: center;
+  color: #5C514D;
+  font-weight: 600;
+}
+
+.subtotal {
+  min-width: 80px;
+  text-align: right;
+  color: #7F4F58;
+  font-weight: bold;
+}
+
+.remove-btn {
+  border: none;
+  background: none;
+  color: #B8838B;
+  font-size: 18px;
+}
+
+.remove-btn:hover {
+  color: #7F4F58;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.cart-total h4 {
+  color: #7F4F58;
+  font-weight: 700;
+  margin: 0;
+}
+
+.clear-btn {
+  background-color: #B8838B;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 9px 25px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.clear-btn:hover {
+  background-color: #7F4F58;
+}
+
+.cart-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.checkout-btn {
+  background-color: #7F4F58;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 9px 30px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.checkout-btn:hover {
+  background-color: #A96F78;
+}
+
+@media (max-width: 576px) {
+  .cart-item {
+    flex-wrap: wrap;
+  }
+}

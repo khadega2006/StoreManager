@@ -1,0 +1,27 @@
+<div class="container mt-5 pt-3">
+  <div *ngIf="loading()" class="text-center">
+    <div class="spinner-border"></div>
+  </div>
+
+  <div *ngIf="errorMessage()" class="alert alert-danger">{{ errorMessage() }}</div>
+
+  <div *ngIf="product() as p" class="row">
+    <div class="col-md-5 text-center">
+      <img [src]="p.image_link" [alt]="p.name" class="img-fluid product-img"
+           (error)="p.image_link='/Hair care.png'">
+    </div>
+    <div class="col-md-7">
+      <h2>{{ p.name }}</h2>
+      <h5>{{ p.brand | titlecase }}</h5>
+      <p>{{ p.description }}</p>
+      <h4>{{ p.price | currency }}</h4>
+
+      <button class="btn btn-secondary" (click)="goBack()">← Back</button>
+      <!-- Admin only -->
+      <ng-container *ngIf="auth.isAdmin()">
+        <button class="btn edit-btn ms-2" (click)="editProduct()">Edit</button>
+        <button class="btn btn-danger ms-2" (click)="deleteProduct()">Delete</button>
+      </ng-container>
+    </div>
+  </div>
+</div>

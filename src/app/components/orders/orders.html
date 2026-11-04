@@ -1,0 +1,56 @@
+<div class="container mt-5 pt-3">
+  <h2>{{ auth.isAdmin() ? 'All Orders' : 'My Orders' }}</h2>
+
+  <div *ngIf="placed()" class="alert alert-success">
+    Your order was placed successfully. Thank you! 🎉
+  </div>
+
+  <div *ngIf="errorMessage()" class="alert alert-danger">{{ errorMessage() }}</div>
+
+  <p *ngIf="loading()" class="text-center">Loading...</p>
+
+  <div *ngIf="!loading() && orders().length === 0" class="empty">
+    <p>No orders yet</p>
+    <a routerLink="/products">Browse products</a>
+  </div>
+
+  <div class="order-card" *ngFor="let order of orders()">
+
+    <div class="order-head">
+      <div>
+        <strong>Order #{{ order._id.slice(-6) }}</strong>
+        <small>{{ order.createdAt | date: 'medium' }}</small>
+        <small *ngIf="auth.isAdmin() && order.user">Customer: {{ order.user.name }} ({{ order.user.email }})</small>
+      </div>
+
+      <!-- Admin: change the status / User: see it -->
+      <select *ngIf="auth.isAdmin(); else statusBadge" class="form-select status-select"
+              [value]="order.status" (change)="changeStatus(order, $event)">
+        <option *ngFor="let s of statuses" [value]="s" [selected]="s === order.status">{{ s }}</option>
+      </select>
+      <ng-template #statusBadge>
+        <span class="status-badge" [class.cancelled]="order.status === 'cancelled'">{{ order.status }}</span>
+      </ng-template>
+    </div>
+
+    <div class="order-item" *ngFor="let item of order.items">
+      <span>{{ item.name }} × {{ item.quantity }}</span>
+      <span>{{ item.price * item.quantity | currency }}</span>
+    </div>
+
+    <div class="order-address">
+      <div>{{ order.shippingAddress.fullName }} - {{ order.shippingAddress.phone }}</div>
+      <div>{{ order.shippingAddress.street }}, {{ order.shippingAddress.city }}, {{ order.shippingAddress.governorate }}</div>
+      <div *ngIf="order.shippingAddress.notes">Notes: {{ order.shippingAddress.notes }}</div>
+      <div>Payment: Cash on delivery</div>
+    </div>
+
+    <div class="order-total">Total: {{ order.totalPrice | currency }}</div>
+
+    <!-- Normal user: cancel (only within 24 hours of the order) -->
+    <div class="cancel-box" *ngIf="!auth.isAdmin() && canCancel(order)">
+      <small>You can cancel this order within 24 hours of placing it.</small>
+      <button type="button" class="cancel-btn" (click)="cancelOrder(order)">Cancel order</button>
+    </div>
+  </div>
+</div>

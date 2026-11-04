@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Matte Velvet Lipstick",
+    "brand": "rosé",
+    "price": 12.5,
+    "category": "Lipstick",
+    "description": "Long-lasting matte lipstick with a smooth velvet finish that stays comfortable all day.",
+    "image": "/Lipstick.png",
+    "stock": 20
+  },
+  {
+    "name": "Glossy Lip Tint",
+    "brand": "rosé",
+    "price": 9.99,
+    "category": "Lipstick",
+    "description": "Lightweight tint that gives your lips a natural glossy color.",
+    "image": "/Lipstick.png",
+    "stock": 20
+  },
+  {
+    "name": "Full Coverage Foundation",
+    "brand": "glowy",
+    "price": 24,
+    "category": "Foundation",
+    "description": "Buildable full coverage foundation with a natural skin-like finish and SPF protection.",
+    "image": "/Foundation.png",
+    "stock": 20
+  },
+  {
+    "name": "Liquid Skin Foundation",
+    "brand": "glowy",
+    "price": 19.5,
+    "category": "Foundation",
+    "description": "Lightweight liquid foundation for a fresh and dewy look.",
+    "image": "/Foundation.png",
+    "stock": 20
+  },
+  {
+    "name": "Volume Boost Mascara",
+    "brand": "lashly",
+    "price": 14.25,
+    "category": "Mascara",
+    "description": "Adds volume and length to your lashes without clumping or smudging.",
+    "image": "/Mascara.png",
+    "stock": 20
+  },
+  {
+    "name": "Waterproof Mascara",
+    "brand": "lashly",
+    "price": 15,
+    "category": "Mascara",
+    "description": "Waterproof formula that lasts all day, even in hot weather.",
+    "image": "/Mascara.png",
+    "stock": 20
+  },
+  {
+    "name": "Peach Glow Blush",
+    "brand": "petal",
+    "price": 11,
+    "category": "Blush",
+    "description": "Silky powder blush that gives your cheeks a soft, natural flush.",
+    "image": "/Blush.png",
+    "stock": 20
+  },
+  {
+    "name": "Rosy Cream Blush",
+    "brand": "petal",
+    "price": 13.75,
+    "category": "Blush",
+    "description": "Creamy blush that blends easily and gives a fresh healthy glow.",
+    "image": "/Blush.png",
+    "stock": 20
+  },
+  {
+    "name": "Hydrating Face Serum",
+    "brand": "purely",
+    "price": 29.9,
+    "category": "Skincare",
+    "description": "Hyaluronic acid serum that deeply hydrates and plumps the skin.",
+    "image": "/Skincare.png",
+    "stock": 20
+  },
+  {
+    "name": "Daily Moisturizer",
+    "brand": "purely",
+    "price": 0,
+    "category": "Skincare",
+    "description": "Light daily moisturizer suitable for all skin types.",
+    "image": "/Skincare.png",
+    "stock": 20
+  },
+  {
+    "name": "Repair Hair Mask",
+    "brand": "silky",
+    "price": 18,
+    "category": "Hair care",
+    "description": "Deep conditioning mask that repairs damaged hair and adds shine.",
+    "image": "/Hair care.png",
+    "stock": 20
+  },
+  {
+    "name": "Argan Oil Hair Serum",
+    "brand": "silky",
+    "price": 16.5,
+    "category": "Hair care",
+    "description": "Smoothing serum that tames frizz and protects hair from heat.",
+    "image": "/Hair care.png",
+    "stock": 20
+  }
+]

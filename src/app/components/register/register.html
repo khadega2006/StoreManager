@@ -1,0 +1,65 @@
+<div class="container mt-5">
+    <h2>Create Account</h2>
+    <form (ngSubmit)="register()">
+
+        <!-- Error -->
+        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+        <!-- Name -->
+        <div class="mb-3">
+            <label>Name</label>
+            <input
+                type="text"
+                class="form-control"
+                name="name"
+                [(ngModel)]="data.name"
+                required
+            >
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label>Email</label>
+            <input
+                type="email"
+                class="form-control"
+                name="email"
+                [(ngModel)]="data.email"
+                required
+            >
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+            <label>Password</label>
+            <input
+                type="password"
+                class="form-control"
+                name="password"
+                minlength="6"
+                [(ngModel)]="data.password"
+                required
+            >
+            <small class="text-muted">At least 6 characters</small>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mb-3">
+            <label>Confirm Password</label>
+            <input
+                type="password"
+                class="form-control"
+                name="confirmPassword"
+                [(ngModel)]="data.confirmPassword"
+                required
+            >
+        </div>
+
+        <!-- Button -->
+        <button type="submit" class="btn auth-btn" [disabled]="loading">Register</button>
+
+        <p class="switch-text">
+            Already have an account? <a routerLink="/login">Login</a>
+        </p>
+    </form>
+</div>

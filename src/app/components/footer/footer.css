@@ -1,0 +1,152 @@
+
+/* Main Footer */
+.footer {
+  background-color: #F5EFEA;
+  color: #5C514D;
+  padding: 55px 0 20px;
+  margin-top: 50px;
+}
+
+/* Store Info */
+.footer-logo {
+  color: #A96F78;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.footer-logo span {
+  color: #7F4F58;
+}
+
+.footer-brand p {
+  max-width: 350px;
+  line-height: 1.8;
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+
+/* Section Titles */
+.footer h5 {
+  color: #A96F78;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 22px;
+}
+
+/* Quick Links */
+.footer-links a {
+  display: block;
+  width: fit-content;
+  color: #5C514D;
+  text-decoration: none;
+  margin-bottom: 13px;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #7F4F58;
+  transform: translateX(5px);
+}
+
+/* Social Media Icons */
+.social-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.social-links a {
+  color: #A96F78;
+  font-size: 23px;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #7F4F58;
+  transform: translateY(-3px);
+}
+
+/* Contact Information */
+.footer-contact p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.footer-contact i {
+  color: #A96F78;
+  margin-right: 10px;
+  font-size: 17px;
+}
+
+/* Bottom Footer */
+.footer-bottom {
+  border-top: 1px solid rgba(92, 81, 77, 0.2);
+  margin-top: 35px;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-bottom p,
+.footer-bottom span {
+  margin: 0;
+  font-size: 13px;
+  color: #5C514D;
+}
+
+.footer-contact a {
+  color: #5C514D;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.footer-contact a:hover {
+  color: #7F4F58;
+}
+
+.footer-contact a {
+  color: #5C514D;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.footer-contact a:hover {
+  color: #7F4F58;
+}
+/* Responsive Design */
+@media (max-width: 767px) {
+  .footer {
+    padding: 40px 0 20px;
+    text-align: center;
+  }
+
+  .footer-brand p {
+    margin: 0 auto 22px;
+  }
+
+  .social-links {
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .footer-links,
+  .footer-contact {
+    margin-bottom: 25px;
+  }
+
+  .footer-links a {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}

@@ -1,0 +1,78 @@
+
+<footer class="footer">
+  <div class="container">
+    <div class="row footer-content">
+
+      <!-- Store Info -->
+      <div class="col-lg-5 col-md-6 footer-brand">
+        <h3 class="footer-logo">Store<span>.</span></h3>
+        <p>
+          Your favourite place to shop everything you love.
+          Discover quality products and enjoy a seamless shopping experience.
+        </p>
+
+        
+      <div class="social-links">
+        <!-- Facebook -->
+        <a href="#" aria-label="Facebook">
+          <i class="bi bi-facebook"></i>
+        </a>
+
+        <!-- Instagram -->
+        <a href="#" aria-label="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+
+        <!-- WhatsApp -->
+        <a href="#" aria-label="WhatsApp">
+          <i class="bi bi-whatsapp"></i>
+        </a>
+      </div>
+
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-lg-3 col-md-6 footer-links">
+        <h5>Quick Links</h5>
+        <a routerLink="/home">Home</a>
+        <a routerLink="/products">Products</a>
+        <a routerLink="/add-product" *ngIf="auth.isAdmin()">Add Product</a>
+      </div>
+
+      <!-- Contact -->
+      <div class="col-lg-4 col-md-6 footer-contact">
+        <h5>Get In Touch</h5>
+
+        <p>
+          <i class="bi bi-envelope"></i>
+          <a href="mailto:khadegamohammed31@gmail.com">
+            khadegamohammed31@gmail.com
+          </a>
+        </p>
+
+        <p>
+          <i class="bi bi-geo-alt"></i>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Shebin+El-Kom%2C+Menoufia%2C+Egypt"
+            target="_blank"
+            rel="noopener noreferrer">
+            Shebin El-Kom, Menoufia, Egypt
+          </a>
+        </p>
+
+        <p>
+          <i class="bi bi-clock"></i>
+          Available 24/7
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Bottom Footer -->
+    <div class="footer-bottom">
+      <p>© 2026 Store. All Rights Reserved.</p>
+      <span>Made with care for your shopping experience.</span>
+    </div>
+
+  </div>
+</footer>

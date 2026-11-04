@@ -1,0 +1,120 @@
+.container {
+  max-width: 1000px;
+  margin-bottom: 60px;
+}
+
+h2 {
+  text-align: center;
+  color: #A96F78;
+  font-weight: 700;
+  margin-bottom: 35px;
+}
+
+h5 {
+  color: #A96F78;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+form,
+.summary {
+  background-color: #FAF7F4;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(92, 81, 77, 0.12);
+}
+
+label {
+  color: #7F4F58;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.form-control {
+  border: 1px solid #D8C2BD;
+  border-radius: 10px;
+  padding: 11px 14px;
+}
+
+.form-control:focus {
+  border-color: #B8838B;
+  box-shadow: 0 0 0 0.2rem rgba(184, 131, 139, 0.15);
+}
+
+.saved-note {
+  color: #5C514D;
+  font-size: 14px;
+}
+
+/* Payment */
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #D8C2BD;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #5C514D;
+  cursor: pointer;
+}
+
+.payment-option.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.payment-option input {
+  accent-color: #B8838B;
+}
+
+/* Button */
+
+.place-btn {
+  display: block;
+  margin: 25px auto 0;
+  background-color: #B8838B;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 35px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.place-btn:hover {
+  background-color: #7F4F58;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Summary */
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  color: #5C514D;
+  padding: 8px 0;
+  border-bottom: 1px solid #ECDDD9;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  color: #7F4F58;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 15px 0;
+}
+
+.summary a {
+  color: #B8838B;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.summary a:hover {
+  color: #7F4F58;
+}

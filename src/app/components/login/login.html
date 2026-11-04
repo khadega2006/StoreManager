@@ -1,0 +1,39 @@
+<div class="container mt-5">
+    <h2>Login</h2>
+    <form (ngSubmit)="login()">
+
+        <!-- Error -->
+        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label>Email</label>
+            <input
+                type="email"
+                class="form-control"
+                name="email"
+                [(ngModel)]="credentials.email"
+                required
+            >
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+            <label>Password</label>
+            <input
+                type="password"
+                class="form-control"
+                name="password"
+                [(ngModel)]="credentials.password"
+                required
+            >
+        </div>
+
+        <!-- Button -->
+        <button type="submit" class="btn auth-btn" [disabled]="loading">Login</button>
+
+        <p class="switch-text">
+            Don't have an account? <a routerLink="/register">Register</a>
+        </p>
+    </form>
+</div>

@@ -1,0 +1,87 @@
+<div class="container mt-5 pt-3">
+  <h2>Checkout</h2>
+
+  <div class="row g-4" *ngIf="ready()">
+
+    <!-- Shipping + payment -->
+    <div class="col-lg-7">
+      <form (ngSubmit)="placeOrder()">
+
+        <div *ngIf="errorMessage()" class="alert alert-danger">{{ errorMessage() }}</div>
+
+        <h5>Delivery details</h5>
+
+        <p *ngIf="hasSavedAddress()" class="saved-note">
+          We filled in your last address. You can change it if you want.
+        </p>
+
+        <div class="mb-3">
+          <label>Full Name</label>
+          <input type="text" class="form-control" name="fullName" [(ngModel)]="form.fullName" required>
+        </div>
+
+        <div class="mb-3">
+          <label>Phone</label>
+          <input type="tel" class="form-control" name="phone" placeholder="01012345678"
+                 [(ngModel)]="form.phone" required>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label>Governorate</label>
+            <input type="text" class="form-control" name="governorate" [(ngModel)]="form.governorate" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label>City / Area</label>
+            <input type="text" class="form-control" name="city" [(ngModel)]="form.city" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label>Street address</label>
+          <input type="text" class="form-control" name="street"
+                 placeholder="Street, building, floor, apartment" [(ngModel)]="form.street" required>
+        </div>
+
+        <div class="mb-3">
+          <label>Notes (optional)</label>
+          <textarea class="form-control" name="notes" rows="2" [(ngModel)]="form.notes"></textarea>
+        </div>
+
+        <h5 class="mt-4">Payment method</h5>
+
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="cash_on_delivery" [(ngModel)]="paymentMethod">
+          <span>Cash on delivery</span>
+        </label>
+
+        <label class="payment-option disabled">
+          <input type="radio" name="paymentMethod" value="card" disabled>
+          <span>Credit / debit card <small>(coming soon)</small></span>
+        </label>
+
+        <button type="submit" class="btn place-btn" [disabled]="submitting()">Place Order</button>
+      </form>
+    </div>
+
+    <!-- Order summary -->
+    <div class="col-lg-5">
+      <div class="summary">
+        <h5>Order summary</h5>
+
+        <div class="summary-item" *ngFor="let item of cart.items()">
+          <span>{{ item.name }} × {{ item.quantity }}</span>
+          <span>{{ item.price * item.quantity | currency }}</span>
+        </div>
+
+        <div class="summary-total">
+          <span>Total</span>
+          <span>{{ cart.total() | currency }}</span>
+        </div>
+
+        <a routerLink="/cart">← Back to cart</a>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="card product-card h-100" [ngClass]="{ 'no-price': !product.price || product.price == 0 }">
+  <img [src]="product.image_link" class="card-img-top" [alt]="product.name"
+       (error)="product.image_link='/Hair care.png'">
+  <div class="card-body text-center d-flex flex-column justify-content-between">
+    <h5 class="card-title">{{ product.name | uppercase }}</h5>
+    <p class="text-muted small">{{ product.description | truncate:60 }}</p>
+    <p class="card-text">{{ product.price | currency }}</p>
+    <!-- Cart (logged in normal users only) -->
+    <div *ngIf="auth.isLoggedIn() && !auth.isAdmin()" class="cart-box mb-2">
+      <div class="qty">
+        <button type="button" (click)="decrease()">−</button>
+        <span>{{ quantity() }}</span>
+        <button type="button" (click)="increase()">+</button>
+      </div>
+    <button type="button" class="add-cart-btn" (click)="addToCart()" aria-label="Add to cart">
+      <span>{{ added() ? '✓' : '+' }}</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+    </button>
+    
+    </div>
+    <button class="btn view-btn mt-auto" (click)="onViewDetails()">View Details</button>
+  </div>
+</div>

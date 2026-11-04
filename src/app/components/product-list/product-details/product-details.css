@@ -1,0 +1,18 @@
+/* Edit Button (admin) */
+
+.edit-btn {
+background-color: #B8838B;
+color: white;
+border: none;
+}
+
+.edit-btn:hover {
+background-color: #7F4F58;
+color: white;
+}
+
+.product-img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+}
