@@ -1,0 +1,435 @@
+:host {
+  display: block;
+  background-color: #FAF7F4;
+  min-height: calc(100vh - 56px);
+}
+
+.dash {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+  color: #5C514D;
+}
+
+/* ---------- Header ---------- */
+
+.dash-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 22px;
+}
+
+.hello {
+  color: #B8838B;
+  font-weight: 600;
+}
+
+.dash-head h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #A96F78;
+  margin: 0;
+}
+
+.export-btn {
+  background-color: #B8838B;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 22px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.export-btn:hover:not(:disabled) {
+  background-color: #7F4F58;
+}
+
+.export-btn:disabled {
+  opacity: 0.5;
+}
+
+/* ---------- Layout ---------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 20px;
+  align-items: start;
+}
+
+.main,
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.row-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.row-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card-box {
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 5px 20px rgba(92, 81, 77, 0.10);
+}
+
+.card-box h5 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #7F4F58;
+  margin: 0 0 4px;
+}
+
+.card-box small {
+  color: #8a7d78;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.head-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.empty {
+  text-align: center;
+  padding: 50px 20px;
+  color: #8a7d78;
+}
+
+.empty i {
+  font-size: 40px;
+  color: #B8838B;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Stat cards ---------- */
+
+.stat-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #5C514D;
+  margin-bottom: 10px;
+}
+
+.stat-title i {
+  color: #B8838B;
+  margin-right: 4px;
+}
+
+.stat-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: #7F4F58;
+}
+
+.stat-value small {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.stat-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* green = up, red = down (so the number is easy to read at a glance) */
+.chip {
+  background-color: #E4F7EA;
+  color: #1E9E4A;
+  border-radius: 6px;
+  padding: 1px 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.chip.down {
+  background-color: #FDECEA;
+  color: #DC3545;
+}
+
+.trending {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.trending li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 3px 0;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.trending li small {
+  white-space: nowrap;
+}
+
+/* ---------- Line chart ---------- */
+
+.legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #5C514D;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot.cur {
+  background-color: #A96F78;
+}
+
+.dot.prev {
+  background-color: #D8C2BD;
+}
+
+.year-select {
+  border: 1px solid #ECDDD9;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 13px;
+  color: #5C514D;
+  background-color: white;
+}
+
+.line-chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.line-chart .grid {
+  stroke: #ECDDD9;
+  stroke-width: 1;
+}
+
+.line-chart .axis {
+  fill: #8a7d78;
+  font-size: 11px;
+}
+
+.line-chart .line {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.line-chart .line.cur {
+  stroke: #A96F78;
+}
+
+.line-chart .line.prev {
+  stroke: #D8C2BD;
+  stroke-dasharray: 6 5;
+}
+
+.line-chart .pt {
+  stroke: white;
+  stroke-width: 2;
+  cursor: pointer;
+}
+
+.line-chart .pt.cur {
+  fill: #A96F78;
+}
+
+.line-chart .pt.prev {
+  fill: #D8C2BD;
+}
+
+.line-chart .pt:hover {
+  r: 6;
+}
+
+/* ---------- Bars ---------- */
+
+.bars {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  height: 230px;
+}
+
+.bar-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.bar-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: #A96F78;
+  margin-bottom: 4px;
+}
+
+.bar-track {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  background-color: #F5EFEA;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, #B8838B, #7F4F58);
+  border-radius: 8px;
+  transition: height 0.4s;
+}
+
+.bar-label {
+  width: 100%;
+  margin-top: 8px;
+  text-align: center;
+  font-size: 12px;
+  color: #5C514D;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Donut ---------- */
+
+.donut-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.donut {
+  width: 190px;
+  height: 190px;
+}
+
+.donut-num {
+  font-size: 28px;
+  font-weight: 700;
+  fill: #7F4F58;
+}
+
+.donut-sub {
+  font-size: 12px;
+  fill: #8a7d78;
+}
+
+.donut-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.donut-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+  font-size: 14px;
+}
+
+.donut-legend li span {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------- Lists (transactions / customers) ---------- */
+
+.list {
+  margin-top: 10px;
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid #ECDDD9;
+}
+
+.list-row:last-child {
+  border-bottom: none;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: white;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.money {
+  color: #7F4F58;
+  white-space: nowrap;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1100px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .row-3,
+  .row-2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

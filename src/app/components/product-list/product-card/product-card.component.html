@@ -3,6 +3,14 @@
        (error)="product.image_link='/Hair care.png'">
   <div class="card-body text-center d-flex flex-column justify-content-between">
     <h5 class="card-title">{{ product.name | uppercase }}</h5>
+    <!-- Rating -->
+    <div class="card-rating" *ngIf="product.ratingCount > 0; else noRating">
+      <span class="stars" [style.--pct]="(product.ratingAverage * 20) + '%'">★★★★★</span>
+      <small>{{ product.ratingAverage }} ({{ product.ratingCount }})</small>
+    </div>
+    <ng-template #noRating>
+      <div class="card-rating"><small>No reviews yet</small></div>
+    </ng-template>
     <p class="text-muted small">{{ product.description | truncate:60 }}</p>
     <p class="card-text">{{ product.price | currency }}</p>
     <!-- Cart (logged in normal users only) -->

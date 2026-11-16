@@ -50,10 +50,41 @@
 
         <h5 class="mt-4">Payment method</h5>
 
-        <label class="payment-option">
-          <input type="radio" name="paymentMethod" value="cash_on_delivery" [(ngModel)]="paymentMethod">
-          <span>Cash on delivery</span>
+        <label class="payment-option" *ngFor="let m of methods" [class.selected]="paymentMethod === m.value">
+          <input type="radio" name="paymentMethod" [value]="m.value" [(ngModel)]="paymentMethod">
+          <i [class]="'bi ' + m.icon"></i>
+          <span>{{ m.label }}</span>
         </label>
+
+        <!-- Transfer methods: tell the customer where to send the money -->
+        <div class="transfer-box" *ngIf="selectedMethod?.transfer">
+          <p>Please transfer <strong>{{ cart.total() | currency }}</strong> to:</p>
+          <div class="transfer-row">
+            <div class="transfer-number">{{ account.number }}</div>
+            <button type="button" class="copy-btn" [class.copied]="copied()" (click)="copyNumber()">
+              <i [class]="copied() ? 'bi bi-check2' : 'bi bi-copy'"></i>
+              {{ copied() ? 'Copied' : 'Copy' }}
+            </button>
+          </div>
+          <small>{{ account.name }}</small>
+          <p class="transfer-note">Then upload a screenshot of the payment and place your order. We will confirm it as soon as we check the payment.</p>
+
+          <!-- Screenshot of the payment -->
+          <div class="proof">
+            <input type="file" accept="image/*" hidden #proofInput (change)="onProofSelected($event)">
+
+            <button type="button" class="proof-btn" (click)="proofInput.click()">
+              <i class="bi bi-upload"></i> {{ proofFile ? 'Change screenshot' : 'Upload payment screenshot' }}
+            </button>
+
+            <div class="proof-preview" *ngIf="proofPreview">
+              <img [src]="proofPreview" alt="Payment screenshot">
+              <button type="button" class="proof-remove" (click)="removeProof(proofInput)">Remove</button>
+            </div>
+
+            <small class="proof-error" *ngIf="proofError">{{ proofError }}</small>
+          </div>
+        </div>
 
         <label class="payment-option disabled">
           <input type="radio" name="paymentMethod" value="card" disabled>

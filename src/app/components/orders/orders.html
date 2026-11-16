@@ -5,7 +5,13 @@
     Your order was placed successfully. Thank you! 🎉
   </div>
 
+  <div *ngIf="proofFailed()" class="alert alert-warning">
+    Your order was placed, but the payment screenshot could not be uploaded. Please upload it from the order below.
+  </div>
+
   <div *ngIf="errorMessage()" class="alert alert-danger">{{ errorMessage() }}</div>
+
+  <div *ngIf="movedMessage()" class="alert alert-success">{{ movedMessage() }}</div>
 
   <p *ngIf="loading()" class="text-center">Loading...</p>
 
@@ -19,7 +25,7 @@
     <div class="order-head">
       <div>
         <strong>Order #{{ order._id.slice(-6) }}</strong>
-        <small>{{ order.createdAt | date: 'medium' }}</small>
+        <small>Placed on {{ order.createdAt | date: "EEEE, d MMMM y 'at' h:mm a" }}</small>
         <small *ngIf="auth.isAdmin() && order.user">Customer: {{ order.user.name }} ({{ order.user.email }})</small>
       </div>
 
@@ -33,16 +39,91 @@
       </ng-template>
     </div>
 
-    <div class="order-item" *ngFor="let item of order.items">
-      <span>{{ item.name }} × {{ item.quantity }}</span>
-      <span>{{ item.price * item.quantity | currency }}</span>
+    <!-- Tracking -->
+    <div class="tracking">
+      <div class="stepper" *ngIf="order.status !== 'cancelled'">
+        <div class="step" *ngFor="let s of steps; let i = index" [class.done]="i <= statusIndex(order)">
+          <span class="dot"></span>
+          <small>{{ s }}</small>
+        </div>
+      </div>
+      <p class="tracking-text">{{ trackingMessage(order) }}</p>
+    </div>
+
+    <!-- Items -->
+    <div *ngFor="let item of order.items">
+      <div class="order-item">
+        <a [routerLink]="['/products', item.product]">{{ item.name }}</a>
+        <span>× {{ item.quantity }}</span>
+        <span class="item-price">{{ item.price * item.quantity | currency }}</span>
+      </div>
+
+      <!-- Rating: only for delivered orders (normal user) -->
+      <ng-container *ngIf="!auth.isAdmin() && order.status === 'delivered'">
+
+        <div class="rated" *ngIf="item.myRating > 0; else rateForm">
+          <small>Your rating:</small>
+          <span class="stars" [style.--pct]="(item.myRating * 20) + '%'">★★★★★</span>
+        </div>
+
+        <ng-template #rateForm>
+          <div class="rate-box">
+            <small>How was this product? Rate it:</small>
+
+            <div class="rate-stars">
+              <button type="button" *ngFor="let n of [1, 2, 3, 4, 5]"
+                      [class.on]="n <= draft(item.product).rating"
+                      [attr.aria-label]="n + ' stars'"
+                      (click)="setRating(item.product, n)">★</button>
+            </div>
+
+            <textarea rows="2" maxlength="500" placeholder="Write your review (optional)"
+                      (input)="setComment(item.product, $any($event.target).value)"></textarea>
+
+            <div *ngIf="draft(item.product).error" class="review-error">{{ draft(item.product).error }}</div>
+
+            <button type="button" class="submit-review"
+                    [disabled]="!draft(item.product).rating || draft(item.product).submitting"
+                    (click)="submitReview(item.product)">Submit review</button>
+          </div>
+        </ng-template>
+
+      </ng-container>
     </div>
 
     <div class="order-address">
       <div>{{ order.shippingAddress.fullName }} - {{ order.shippingAddress.phone }}</div>
       <div>{{ order.shippingAddress.street }}, {{ order.shippingAddress.city }}, {{ order.shippingAddress.governorate }}</div>
       <div *ngIf="order.shippingAddress.notes">Notes: {{ order.shippingAddress.notes }}</div>
-      <div>Payment: Cash on delivery</div>
+      <div>Payment: {{ paymentName(order) }}</div>
+
+      <!-- Screenshot of the payment (the admin checks it before confirming) -->
+      <div class="mt-2" *ngIf="order.paymentProof">
+        <small>Payment screenshot:</small><br>
+        <a [href]="order.paymentProof" target="_blank" rel="noopener">
+          <img [src]="order.paymentProof" alt="Payment screenshot" class="img-thumbnail" style="max-height: 140px">
+        </a>
+      </div>
+
+      <!-- User: transfer orders that are still pending -->
+      <ng-container *ngIf="needsTransfer(order)">
+        <div class="alert alert-warning py-2 mt-2 mb-0" *ngIf="!order.paymentProof">
+          Please transfer {{ order.totalPrice | currency }} to {{ account.number }} ({{ account.name }}),
+          then upload a screenshot of the payment.
+        </div>
+        <div class="alert alert-info py-2 mt-2 mb-0" *ngIf="order.paymentProof">
+          We received your screenshot. We will confirm your order as soon as we check the payment.
+        </div>
+
+        <div class="mt-2">
+          <input type="file" accept="image/*" hidden #proofInput (change)="uploadProof(order, $event)">
+          <button type="button" class="btn btn-sm btn-outline-secondary"
+                  [disabled]="uploadingId() === order._id" (click)="proofInput.click()">
+            <i class="bi bi-upload"></i>
+            {{ uploadingId() === order._id ? 'Uploading...' : (order.paymentProof ? 'Replace screenshot' : 'Upload payment screenshot') }}
+          </button>
+        </div>
+      </ng-container>
     </div>
 
     <div class="order-total">Total: {{ order.totalPrice | currency }}</div>

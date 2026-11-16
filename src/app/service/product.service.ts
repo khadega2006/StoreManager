@@ -14,10 +14,12 @@ export class ProductService {
     return { ...p, id: p._id, image_link: p.image || '/Hair care.png' };
   }
 
-  // All products, or only one category (e.g. 'Lipstick')
-  getProducts(category?: string): Observable<any[]> {
+  // All products. Optional: one category, a search text, and a sort (newest | rating | price-asc | price-desc)
+  getProducts(options: { category?: string; search?: string; sort?: string } = {}): Observable<any[]> {
     let params = new HttpParams();
-    if (category) params = params.set('category', category);
+    if (options.category) params = params.set('category', options.category);
+    if (options.search) params = params.set('search', options.search);
+    if (options.sort) params = params.set('sort', options.sort);
 
     return this.http
       .get<any>(this.url, { params })
@@ -39,5 +41,15 @@ export class ProductService {
 
   deleteProduct(id: string): Observable<any> {
     return this.http.delete<any>(`${this.url}/${id}`);
+  }
+
+    // Reviews of one product (public)
+  getReviews(productId: string): Observable<any[]> {
+    return this.http.get<any>(`${this.url}/${productId}/reviews`).pipe(map((res) => res.data));
+  }
+
+  // A user can review a product only after it was delivered to him
+  addReview(productId: string, body: { rating: number; comment: string }): Observable<any> {
+    return this.http.post<any>(`${this.url}/${productId}/reviews`, body);
   }
 }

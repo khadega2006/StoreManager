@@ -42,3 +42,15 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Angular cache
+.angular/
+
+# Environment secrets
+.env
+.env.*
+!.env.example

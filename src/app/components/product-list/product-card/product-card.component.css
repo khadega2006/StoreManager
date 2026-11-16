@@ -60,3 +60,27 @@
 .add-cart-btn:hover {
   background-color: #7F4F58;
 }
+
+/* Rating */
+
+.card-rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.card-rating small {
+  color: #5C514D;
+}
+
+.stars {
+  background: linear-gradient(90deg, #B8838B var(--pct, 0%), #D8C2BD var(--pct, 0%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  letter-spacing: 2px;
+  font-size: 18px;
+}

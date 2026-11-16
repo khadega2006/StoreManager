@@ -16,7 +16,14 @@ const checkId = (id, next) => {
     return true;
 };
 
-// Get all products (or only the products of one category)
+const SORT_OPTIONS = {
+    "newest": { createdAt: -1, _id: -1 },
+    "price-asc": { price: 1, _id: 1 },
+    "price-desc": { price: -1, _id: 1 },
+    "rating": { ratingAverage: -1, ratingCount: -1, _id: 1 }
+};
+
+
 export const getProducts = async (req, res, next) => {
     try {
         const filter = {};
@@ -28,7 +35,21 @@ export const getProducts = async (req, res, next) => {
             filter.category = new RegExp(`^${escapeRegex(category)}$`, "i");
         }
 
-        const products = await Product.find(filter).sort({ createdAt: 1, _id: 1 });
+        if (req.query.search) {
+            const search = String(req.query.search).trim().slice(0, 50);
+
+            if (search) {
+                const regex = new RegExp(escapeRegex(search), "i");
+                filter.$or = [{ name: regex }, { brand: regex }];
+            }
+        }
+
+        const sortKey = String(req.query.sort || "");
+        const sort = Object.hasOwn(SORT_OPTIONS, sortKey)
+            ? SORT_OPTIONS[sortKey]
+            : { createdAt: 1, _id: 1 };
+
+        const products = await Product.find(filter).sort(sort);
 
         res.status(200).json({
             status: "success",

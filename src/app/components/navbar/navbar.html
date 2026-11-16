@@ -20,6 +20,10 @@
         </li>
         <!-- Admin only -->
         <li class="nav-item" *ngIf="auth.isAdmin()">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        </li>
+        <!-- Admin only -->
+        <li class="nav-item" *ngIf="auth.isAdmin()">
           <a class="nav-link" routerLink="/add-product" routerLinkActive="active">Add Product</a>
         </li>
       </ul>

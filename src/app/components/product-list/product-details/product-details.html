@@ -5,23 +5,84 @@
 
   <div *ngIf="errorMessage()" class="alert alert-danger">{{ errorMessage() }}</div>
 
-  <div *ngIf="product() as p" class="row">
-    <div class="col-md-5 text-center">
-      <img [src]="p.image_link" [alt]="p.name" class="img-fluid product-img"
-           (error)="p.image_link='/Hair care.png'">
-    </div>
-    <div class="col-md-7">
-      <h2>{{ p.name }}</h2>
-      <h5>{{ p.brand | titlecase }}</h5>
-      <p>{{ p.description }}</p>
-      <h4>{{ p.price | currency }}</h4>
+  <div *ngIf="product() as p">
+    <div class="row">
+      <div class="col-md-5 text-center">
+        <img [src]="p.image_link" [alt]="p.name" class="img-fluid product-img"
+             (error)="p.image_link='/Hair care.png'">
+      </div>
 
-      <button class="btn btn-secondary" (click)="goBack()">← Back</button>
-      <!-- Admin only -->
-      <ng-container *ngIf="auth.isAdmin()">
-        <button class="btn edit-btn ms-2" (click)="editProduct()">Edit</button>
-        <button class="btn btn-danger ms-2" (click)="deleteProduct()">Delete</button>
-      </ng-container>
+      <div class="col-md-7">
+        <!-- Category (opens the products of this category) -->
+        <a class="category-chip" routerLink="/products" [queryParams]="{ category: p.category }">{{ p.category }}</a>
+
+        <h2>{{ p.name }}</h2>
+        <h5 *ngIf="p.brand">{{ p.brand | titlecase }}</h5>
+
+        <!-- Rating summary -->
+        <div class="rating-summary">
+          <span class="stars" [style.--pct]="ratingPercent() + '%'">★★★★★</span>
+          <span *ngIf="p.ratingCount > 0">
+            {{ p.ratingAverage }} ({{ p.ratingCount }} {{ p.ratingCount === 1 ? 'review' : 'reviews' }})
+          </span>
+          <span *ngIf="!p.ratingCount" class="muted">No reviews yet</span>
+        </div>
+
+        <h4 class="price">{{ p.price | currency }}</h4>
+        <p>{{ p.description }}</p>
+
+        <ul class="info-list">
+          <li>🚚 Delivery within about 7 days</li>
+          <li>💵 Cash on delivery</li>
+          <li>↩️ You can cancel your order within 24 hours</li>
+        </ul>
+
+        <!-- Buy (normal users only) -->
+        <div class="buy-box" *ngIf="auth.isLoggedIn() && !auth.isAdmin(); else loginHint">
+          <div class="qty">
+            <button type="button" (click)="decrease()">−</button>
+            <span>{{ quantity() }}</span>
+            <button type="button" (click)="increase()">+</button>
+          </div>
+          <button type="button" class="cart-btn" (click)="addToCart()">
+            {{ added() ? 'Added ✓' : 'Add to Cart' }}
+          </button>
+          <button type="button" class="buy-btn" (click)="buyNow()">Buy Now</button>
+        </div>
+
+        <ng-template #loginHint>
+          <p *ngIf="!auth.isLoggedIn()" class="login-hint">
+            <a routerLink="/login">Login</a> or <a routerLink="/register">create an account</a> to buy this product.
+          </p>
+        </ng-template>
+
+        <div class="mt-3">
+          <button class="btn btn-secondary" (click)="goBack()">← Back</button>
+          <!-- Admin only -->
+          <ng-container *ngIf="auth.isAdmin()">
+            <button class="btn edit-btn ms-2" (click)="editProduct()">Edit</button>
+            <button class="btn btn-danger ms-2" (click)="deleteProduct()">Delete</button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reviews -->
+    <div class="reviews">
+      <h4>Customer reviews</h4>
+
+      <p *ngIf="reviews().length === 0" class="muted">
+        No reviews yet. Customers who received this product can rate it from their orders.
+      </p>
+
+      <div class="review" *ngFor="let r of reviews()">
+        <div class="review-head">
+          <strong>{{ r.user?.name || 'Customer' }}</strong>
+          <span class="stars" [style.--pct]="(r.rating * 20) + '%'">★★★★★</span>
+          <small>{{ r.createdAt | date: 'mediumDate' }}</small>
+        </div>
+        <p *ngIf="r.comment" class="review-text">{{ r.comment }}</p>
+      </div>
     </div>
   </div>
 </div>

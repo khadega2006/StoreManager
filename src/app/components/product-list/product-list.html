@@ -5,6 +5,22 @@
     <a routerLink="/products">View all products</a>
   </div>
 
+  <!-- Search + sort -->
+  <div class="toolbar">
+    <input #searchBox type="search" class="form-control search-box" placeholder="Search by name or brand..."
+           [value]="initialSearch" (input)="onSearchTyped(searchBox.value)">
+
+    <select class="form-select sort-select" aria-label="Sort products" (change)="onSortChange($any($event.target).value)">
+      <option *ngFor="let o of sortOptions" [value]="o.value" [selected]="o.value === sort()">{{ o.label }}</option>
+    </select>
+
+    <button *ngIf="search() || sort()" type="button" class="clear-btn" (click)="clearFilters(searchBox)">Clear</button>
+  </div>
+
+  <p *ngIf="!loading() && !errorMessage() && products().length > 0" class="results-count">
+    {{ products().length }} {{ products().length === 1 ? 'product' : 'products' }}
+  </p>
+
   <div *ngIf="loading()" class="text-center my-5">
     <div class="spinner-border" role="status"></div>
     <p>Loading products...</p>
@@ -13,7 +29,7 @@
   <div *ngIf="errorMessage()" class="alert alert-danger">{{ errorMessage() }}</div>
 
   <div *ngIf="!loading() && !errorMessage() && products().length === 0" class="alert alert-warning">
-    No products found
+    {{ search() ? 'No products match "' + search() + '"' : 'No products found' }}
   </div>
 
   <div class="row g-4">

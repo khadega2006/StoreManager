@@ -44,6 +44,14 @@ const routes: Routes = [
 
   // Admin only
   {
+    path: 'dashboard',
+    canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./components/dashboard/dashboard').then(c => c.Dashboard)
+  },
+
+  // Admin only
+  {
     path: 'add-product',
     canActivate: [adminGuard],
     loadComponent: () =>

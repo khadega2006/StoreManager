@@ -1,0 +1,212 @@
+<div class="dash">
+
+  <div *ngIf="errorMessage()" class="alert alert-danger">{{ errorMessage() }}</div>
+  <p *ngIf="loading()" class="text-center">Loading...</p>
+
+  <ng-container *ngIf="!loading() && !errorMessage()">
+
+    <!-- Header -->
+    <div class="dash-head">
+      <div>
+        <small class="hello">Hello {{ auth.user()?.name }}</small>
+        <h1>{{ greeting() }}</h1>
+      </div>
+      <button type="button" class="export-btn" (click)="exportCsv()" [disabled]="orders().length === 0">
+        <i class="bi bi-download"></i> Export
+      </button>
+    </div>
+
+    <!-- Empty state -->
+    <div *ngIf="orders().length === 0" class="card-box empty">
+      <i class="bi bi-bag-check"></i>
+      <p>No delivered orders yet. Delivered orders will show up here with their stats and charts.</p>
+    </div>
+
+    <div class="layout" *ngIf="orders().length > 0">
+
+      <!-- ===== Main column ===== -->
+      <div class="main">
+
+        <!-- Stat cards -->
+        <div class="row-3">
+          <div class="card-box stat">
+            <div class="stat-title"><i class="bi bi-cash-stack"></i> Total Revenue</div>
+            <div class="stat-value">{{ stats().revenue | currency }}</div>
+            <div class="stat-foot">
+              <small>Since last month</small>
+              <span class="chip" [class.down]="stats().revenueChange !== null && stats().revenueChange! < 0">
+                {{ changeText(stats().revenueChange) }}
+              </span>
+            </div>
+          </div>
+
+          <div class="card-box stat">
+            <div class="stat-title"><i class="bi bi-bag-check"></i> Total Orders</div>
+            <div class="stat-value">{{ stats().count }} <small>orders</small></div>
+            <div class="stat-foot">
+              <small>Since last month</small>
+              <span class="chip" [class.down]="stats().countChange !== null && stats().countChange! < 0">
+                {{ changeText(stats().countChange) }}
+              </span>
+            </div>
+          </div>
+
+          <div class="card-box stat">
+            <div class="stat-title"><i class="bi bi-fire"></i> Trending item</div>
+            <ol class="trending">
+              <li *ngFor="let p of trending()">
+                <span class="ellipsis" [title]="p.name">{{ p.name }}</span>
+                <small>{{ p.quantity }} sold</small>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Sale analytics (line chart) -->
+        <div class="card-box">
+          <div class="card-head">
+            <div>
+              <h5>Sale Analytics</h5>
+              <small>Revenue per month</small>
+            </div>
+
+            <div class="head-right">
+              <span class="legend"><i class="dot cur"></i> {{ year() }}</span>
+              <span class="legend"><i class="dot prev"></i> {{ year() - 1 }}</span>
+              <select class="year-select" (change)="setYear($event)">
+                <option *ngFor="let y of years()" [value]="y" [selected]="y === year()">{{ y }}</option>
+              </select>
+            </div>
+          </div>
+
+          <svg [attr.viewBox]="'0 0 ' + chart().width + ' ' + chart().height" class="line-chart"
+               role="img" aria-label="Revenue per month">
+            <defs>
+              <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#A96F78" stop-opacity="0.28" />
+                <stop offset="100%" stop-color="#A96F78" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+
+            <!-- Grid + y axis -->
+            <g *ngFor="let t of chart().yTicks">
+              <line [attr.x1]="chart().left" [attr.x2]="chart().right" [attr.y1]="t.y" [attr.y2]="t.y" class="grid" />
+              <text [attr.x]="chart().left - 10" [attr.y]="t.y + 4" text-anchor="end" class="axis">{{ t.label }}</text>
+            </g>
+
+            <!-- x axis -->
+            <text *ngFor="let m of chart().months" [attr.x]="m.x" [attr.y]="chart().height - 8"
+                  text-anchor="middle" class="axis">{{ m.label }}</text>
+
+            <!-- Lines -->
+            <path [attr.d]="chart().currentArea" fill="url(#areaGradient)" />
+            <path [attr.d]="chart().previousLine" class="line prev" />
+            <path [attr.d]="chart().currentLine" class="line cur" />
+
+            <!-- Points (hover to see the value) -->
+            <circle *ngFor="let p of chart().previousPoints" [attr.cx]="p.x" [attr.cy]="p.y" r="4" class="pt prev">
+              <title>{{ p.label }} {{ year() - 1 }}: {{ p.value | currency }}</title>
+            </circle>
+            <circle *ngFor="let p of chart().currentPoints" [attr.cx]="p.x" [attr.cy]="p.y" r="4" class="pt cur">
+              <title>{{ p.label }} {{ year() }}: {{ p.value | currency }}</title>
+            </circle>
+          </svg>
+        </div>
+
+        <div class="row-2">
+
+          <!-- Sale's insights (bars) -->
+          <div class="card-box">
+            <div class="card-head">
+              <div>
+                <h5>Sale's Insights</h5>
+                <small>Top selling products (units)</small>
+              </div>
+            </div>
+
+            <div class="bars">
+              <div class="bar-col" *ngFor="let p of topProducts()">
+                <span class="bar-value">{{ p.quantity }}</span>
+                <div class="bar-track">
+                  <div class="bar-fill" [style.height.%]="p.percent"></div>
+                </div>
+                <span class="bar-label" [title]="p.name">{{ p.name }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sale's source (donut) -->
+          <div class="card-box">
+            <div class="card-head">
+              <div>
+                <h5>Sale's Source</h5>
+                <small>Revenue by governorate</small>
+              </div>
+            </div>
+
+            <div class="donut-wrap">
+              <svg viewBox="0 0 200 200" class="donut" role="img" aria-label="Revenue by governorate">
+                <circle cx="100" cy="100" [attr.r]="donutRadius" fill="none" stroke="#F5EFEA" stroke-width="28" />
+                <circle *ngFor="let s of donut()" cx="100" cy="100" [attr.r]="donutRadius" fill="none"
+                        [attr.stroke]="s.color" stroke-width="28"
+                        [attr.stroke-dasharray]="s.dash" [attr.stroke-dashoffset]="s.offset"
+                        transform="rotate(-90 100 100)">
+                  <title>{{ s.name }}: {{ s.percent }}%</title>
+                </circle>
+                <text x="100" y="98" text-anchor="middle" class="donut-num">{{ stats().count }}</text>
+                <text x="100" y="116" text-anchor="middle" class="donut-sub">orders</text>
+              </svg>
+
+              <ul class="donut-legend">
+                <li *ngFor="let s of donut()">
+                  <i class="dot" [style.background]="s.color"></i>
+                  <span class="ellipsis" [title]="s.name">{{ s.name }}</span>
+                  <strong>{{ s.percent }}%</strong>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== Side column ===== -->
+      <div class="side">
+
+        <!-- Recent transactions -->
+        <div class="card-box">
+          <h5>Recent Transactions</h5>
+
+          <div class="list">
+            <div class="list-row" *ngFor="let r of recent()">
+              <span class="avatar" [style.background]="r.color">{{ r.initial }}</span>
+              <div class="grow">
+                <div class="ellipsis">{{ r.name }}</div>
+                <small>{{ r.date | date: 'd MMM, h:mm a' }}</small>
+              </div>
+              <strong class="money">{{ r.amount | currency }}</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top customers -->
+        <div class="card-box">
+          <h5>Top Customers</h5>
+
+          <div class="list">
+            <div class="list-row" *ngFor="let c of topCustomers()">
+              <span class="avatar" [style.background]="c.color">{{ c.initial }}</span>
+              <div class="grow">
+                <div class="ellipsis">{{ c.name }}</div>
+                <small>{{ c.orders }} {{ c.orders === 1 ? 'order' : 'orders' }}</small>
+              </div>
+              <strong class="money">{{ c.spent | currency }}</strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </ng-container>
+</div>

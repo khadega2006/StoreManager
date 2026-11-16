@@ -70,6 +70,117 @@ label {
   accent-color: #B8838B;
 }
 
+.payment-option i {
+  color: #B8838B;
+  font-size: 18px;
+}
+
+.payment-option.selected {
+  border-color: #B8838B;
+  background-color: #F5EFEA;
+}
+
+/* Transfer details (Vodafone Cash / InstaPay) */
+
+.transfer-box {
+  background-color: #F5EFEA;
+  border: 1px dashed #B8838B;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  color: #5C514D;
+}
+
+.transfer-box p {
+  margin-bottom: 6px;
+}
+
+.transfer-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.copy-btn {
+  background-color: white;
+  color: #7F4F58;
+  border: 1px solid #B8838B;
+  border-radius: 20px;
+  padding: 3px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.copy-btn:hover,
+.copy-btn.copied {
+  background-color: #B8838B;
+  color: white;
+}
+
+.transfer-number {
+  color: #7F4F58;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.transfer-note {
+  margin: 10px 0 0;
+  font-size: 14px;
+}
+
+/* Payment screenshot */
+
+.proof {
+  margin-top: 14px;
+}
+
+.proof-btn {
+  background-color: #B8838B;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 7px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.proof-btn:hover {
+  background-color: #7F4F58;
+}
+
+.proof-preview {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.proof-preview img {
+  max-height: 150px;
+  max-width: 100%;
+  border-radius: 10px;
+  border: 1px solid #D8C2BD;
+}
+
+.proof-remove {
+  background: none;
+  border: none;
+  color: #DC3545;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0;
+}
+
+.proof-error {
+  display: block;
+  margin-top: 8px;
+  color: #DC3545;
+}
+
 /* Button */
 
 .place-btn {

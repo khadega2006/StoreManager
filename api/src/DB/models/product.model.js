@@ -41,9 +41,29 @@ const productSchema = new mongoose.Schema({
         min: 0
     },
 
-    isActive: {
+    lowStockThreshold:{
+        type:Number,
+        default:5,
+        min:0
+    },
+
+        isActive: {
         type: Boolean,
         default: true
+    },
+
+    // Updated automatically every time a review is added
+    ratingAverage: {
+        type: Number,
+        default: 0,
+        min: 0,
+        max: 5
+    },
+
+    ratingCount: {
+        type: Number,
+        default: 0,
+        min: 0
     }
 
 }, {

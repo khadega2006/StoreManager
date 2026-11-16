@@ -18,9 +18,21 @@ export class OrderService {
     return this.http.get<any>(`${this.url}/my`);
   }
 
+  // User: screenshot of the transfer (sent as a file, not JSON)
+  uploadPaymentProof(id: string, file: File): Observable<any> {
+    const body = new FormData();
+    body.append('proof', file);
+    return this.http.post<any>(`${this.url}/${id}/payment-proof`, body);
+  }
+
   // Admin
   getAllOrders(): Observable<any> {
     return this.http.get<any>(this.url);
+  }
+
+  // Admin: delivered orders (dashboard)
+  getDeliveredOrders(): Observable<any> {
+    return this.http.get<any>(`${this.url}/delivered`);
   }
 
   // Admin
